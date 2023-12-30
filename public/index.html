@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <script src="/est4Parse.js"></script> -->
+
+  <title>EST 4 DB Util</title>
+  <style>
+     html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    .file-box {
+      border: .5px solid rgb(65, 9, 218);
+      padding: 2px; /* Adjust padding for better fit */
+      margin: 0px;
+      color: #032138;
+      font-weight: bolder;
+      box-sizing: border-box; /* Include padding and border in the box model */
+      word-wrap: break-word; /* Allow long filenames to break into multiple lines */
+    }
+
+    body {
+      /* background-image: url('stockPhoto.jpeg'); */
+      background: #D3D3D3; background: linear-gradient(to bottom, #D3D3D3 0%, #C4C4C4 100%);
+      /* ... other background styles ... */
+      overflow: auto; /* Allow scrolling when content overflows */
+    }
+
+    .button {
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 10px;
+      background-color: #0074cc;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+      font-weight: bold;
+      font-size: 12px;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .button:active {
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 0 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .drop-area {
+      border: 3px dashed #0074cc;
+      padding: 10px;
+      text-align: center;
+      margin: 5px;
+      height: 100px; /* Adjust height for better fit */
+      max-width: 400px;
+      box-sizing: border-box; /* Include padding and border in the box model */
+    }
+
+    h2, h3 {
+      color: #701313;
+    }
+
+    p {
+      line-height: 2px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 1px;
+      box-sizing: border-box;
+      min-height: 100vh; /* Set a minimum height to allow scrolling */
+    }
+
+    .image-container img {
+      width: 100px;
+      height: auto;
+      margin: 0 5px;
+    }
+
+    .inline {
+      display: flex;
+      flex-direction: inline;
+    }
+
+
+    /* Style for the mobile navigation menu */
+    .mobile-nav {
+          display: none;
+          background-color: #3498db;
+          position: absolute;
+          width: 100%;
+          text-align: center;
+      }
+
+      .mobile-nav a {
+          display: block;
+          padding: 14px 16px;
+          text-decoration: none;
+          color: #fff;
+      }
+
+    /* Media query for small viewports */
+    @media screen and (max-width: 600px) {
+          nav a {
+              display: none; /* Hide regular navigation items */
+          }
+
+          /* Display hamburger icon */
+          .hamburger-icon {
+              display: block;
+              float: right;
+              cursor: pointer;
+          }
+      }
+
+    @media only screen and (min-width: 1024px) {
+      .container {
+        padding: 15px;
+      }
+
+      .button {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+
+      .image-container {
+        justify-content: center;
+        margin-top: 10px;
+      }
+
+      .image-container img {
+        width: 100px;
+        height: auto;
+        margin: 0 5px;
+      }
+
+      .vertical-text {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        white-space: nowrap;
+        position: fixed;
+        left: 0;
+        top: 12%;
+        transform-origin: 100% 50%;
+        font-size: 50px;
+        color: #0074cc;
+      }
+
+        nav {
+            background-color: #3498db; /* Use the same blue color as the rest of the site */
+            overflow: hidden;
+            position: fixed;
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            background-color: #fff; /* White background when hovering */
+            color: #3498db; /* Blue text when hovering */
+        }
+
+        nav a.selected {
+            background-color: #fff; /* White background for the selected item */
+            color: #3498db; /* Blue text for the selected item */
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(52, 152, 219, 0.7); /* Translucent blue background */
+            padding: 0px;
+            text-align: center;
+            color: #fff;
+        }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#">Arizona</a>
+    <a href="#">California</a>
+    <a href="#">Germany</a>
+    <a href="#">Ireland</a>
+    <a href="#">Israel</a>
+    <a href="#">Ohio</a>
+    <a href="#">Oregon</a>
+  </nav>
+
+  <div class="d-flex flex-column justify-content-center w-100 h-100"></div>
+  <div class="vertical-text">Intel Life-Safety Systems Applications</div>
+
+  <div class="container">
+    <div class="inline">
+      <h1>Intel</h1>
+      <h4>&reg &nbsp</h4>
+      <h1>EST 4</h1>
+      <h4>&reg &nbsp</h4>
+      <h1>Database Utility</h1>
+    </div>
+
+    <div>
+      <h2>Step 1 - Delete Old EST4 Files</h2>
+      <button id="myButton" class="button">Delete Old Files</button>
+    <!-- <script src="est4Parse.js"></script> -->
+    </div>
+
+    <h2>Step 2 - Drag and Drop New EST4 4-CU Files</h2>
+    <div class="drop-area" id="building-report-dropzone">
+      <p>Drag and drop files here (Building Report xml)</p>
+      <div id="brFileBox" class="file-box">
+        <p id="brFile"></p>
+      </div>
+      <!-- <script>src="est4Parse.js"</script> -->
+    </div>
+
+    <div class="drop-area" id="response-report-dropzone">
+      <p>Drag and drop files here (Response Report csv)</p>
+      <div id="respFileBox" class="file-box">
+        <p id="respFile"></p>
+      </div>
+    </div>
+
+    <div class="drop-area" id="logic-report-dropzone">
+      <p>Drag and drop files here (Logic Report csv)</p>
+      <div id="logFileBox" class="file-box">
+        <p id="logFile"></p>
+      </div>
+    </div>
+    <div>
+      <button id="verifyButton" class="button">Verify</button>
+      <h4>Note: If files are incorrect in the above boxes, go back to Step 1 and re-perform</h4>
+      <!-- <script src="est4Parse.js"></script> -->
+    </div>
+
+    <h2>Step 3 - Remove Any Old Files Before Creating New Files</h2>
+    <div>
+      <button id="deleteButton" class="button">Run Clean Utility</button>
+      <input type="checkbox" id="deleteCheckbox">Old Files Have Been Deleted and New Headers Created
+      <!-- <script src="est4Parse.js"></script> -->
+    </div>
+
+    <h2>Step 4 - Create New Database Files</h2>
+    <div>
+      <button id="buildingReportsButton" class="button">Building Reports</button>
+      <input type="checkbox" id="myCheckbox"> Building Report Files Have Been Created
+      <script src="est4Parse.js"></script>
+    </div>
+
+    <div>
+      <h2>Step 5 - Download Database Files</h2>
+      <button id="downloadButton" class="button">Download DB Files</button>
+      <script src="est4Parse.js"></script>
+    </div>
+
+    <p id="datetime">Last updated: <span id="lastUpdated"></span></p>
+    <div class="image-container">
+      <img src="intel_logo.jpg" alt="Image 1">
+      <img src="logo_r9_wo_logos_ltrHd.png" alt="Image 2">
+    </div>
+
+    <footer>
+      <h6>&copy 2023 Intel Corporation, all rights reserved</h6>
+  </footer>
+  <script>
+  src="https://code.jquery.com/jquery-3.6.4.min.js"
+
+    // JavaScript to handle navigation bar functionality
+    document.addEventListener("DOMContentLoaded", function () {
+      var navItems = document.querySelectorAll("nav a");
+      var siteLocation = null;
+
+      navItems.forEach(function (item) {
+          item.addEventListener("click", function () {
+              // Remove the "selected" class from all items
+              navItems.forEach(function (navItem) {
+                  navItem.classList.remove("selected");
+              });
+
+              // Add the "selected" class to the clicked item
+              item.classList.add("selected");
+
+              // Store the selected location in the variable
+              siteLocation = item.innerText;
+          });
+      });
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById("myCheckbox").checked = false;
+
+    document.getElementById("buildingReportsButton").addEventListener('click', function () {
+      // Send a request to the server when the button is clicked
+      fetch('/buildingReportsButtonClick')
+        .then(response => response.text())
+        .then(data => {
+          console.log('Server response:', data);
+
+          // The server-side processing is complete, update the checkbox
+          document.getElementById("myCheckbox").checked = true;
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    document.getElementById("deleteButton").addEventListener('click', function () {
+      // Send a request to the server when the button is clicked
+      fetch('/deleteButtonClick')
+        .then(response => response.text())
+        .then(data => {
+          console.log('Server response:', data);
+
+          // The server-side processing is complete, update the checkbox
+          document.getElementById("deleteCheckbox").checked = true;
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+
+});
+    //Update date and time at bottom of page
+    function updateDateTime() {
+      const datetimeElement = document.getElementById('datetime');
+      const now = new Date();
+      const formattedDateTime = now.toLocaleString();
+      datetimeElement.textContent = formattedDateTime;
+    }
+
+    // Update initially and then every second
+    updateDateTime();
+
+function setupDropzone(areaId) {
+      const dropzone = document.getElementById(areaId);
+
+      dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.style.border = '2px dashed #ccc';
+      });
+
+      dropzone.addEventListener('dragleave', () => {
+        dropzone.style.border = '2px dashed #0074cc';
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.style.border = '2px dashed #0074cc';
+
+        const files = e.dataTransfer.files;
+
+        if (files.length > 0) {
+          const formData = new FormData();
+          formData.append('file', files[0]);
+
+          const area = areaId.replace('-dropzone', '');
+          const url = `/upload/${area}`;
+
+          fetch(url, {
+            method: 'POST',
+            body: formData,
+          })
+          .then(response => response.text())
+          .then(message => console.log(message))
+          .catch(error => console.error(error));
+        }
+      });
+    }
+    
+    setupDropzone('building-report-dropzone');
+    setupDropzone('response-report-dropzone');
+    setupDropzone('logic-report-dropzone');
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const button = document.getElementById('myButton');
+      button.addEventListener('click', function () {
+        // Send a request to the server when the button is clicked
+        fetch('/deleteFilesInSubdirectories')
+          .then(response => response.text())
+          .then(data => console.log(data))
+          .catch(error => console.error('Error:', error));
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const button = document.getElementById('downloadButton');
+      button.addEventListener('click', function () {
+        // Send a request to the server when the button is clicked
+        fetch('/download-all')
+          .then(document.getElementById("myCheckbox").checked = false)
+          .then(document.getElementById("deleteCheckbox").checked = false)
+          .then(response => response.text())
+          .then(data => console.log(data))
+          .catch(error => console.error('Error:', error));
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const button = document.getElementById('verifyButton');
+
+    button.addEventListener('click', function () {
+        // Send a request to the server when the button is clicked
+        fetch('/verifybuttonClick')
+            .then(response => response.text())
+            .then(data => console.log('Response from /verifybuttonClick:', data))
+            .catch(error => console.error('Error in /verifybuttonClick:', error));
+
+        // Fetch data from /displayFileBR
+        fetchAndHandleFile('/displayFileBR', 'brFile', 'brFileBox');
+
+        // Fetch data from /displayFileRE
+        fetchAndHandleFile('/displayFileRE', 'respFile', 'respFileBox');
+
+        // Fetch data from /displayFileLO
+        fetchAndHandleFile('/displayFileLO', 'logFile', 'logFileBox', 'yellow');
+    });
+});
+
+function fetchAndHandleFile(url, elementId, boxId, color = 'red') {
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const fileElement = document.getElementById(elementId);
+            fileElement.innerText = data[elementId] || 'No files found';
+            const fileBox = document.getElementById(boxId);
+
+            if (fileElement.innerText !== 'No files found') {
+                // File is available, turn the box green
+                fileBox.style.border = `3px solid green`;
+            } else {
+                // File is not available, turn the box red or yellow based on the color parameter
+                fileBox.style.border = `5px solid ${color}`;
+            }
+        })
+        .catch(error => {
+            console.error(`Error fetching ${elementId} data:`, error);
+
+            // Handle the error by turning the box red
+            const fileBox = document.getElementById(boxId);
+            fileBox.style.border = `5px solid ${color}`;
+
+            // Set the file element text to 'No files found'
+            document.getElementById(elementId).innerText = 'No files found';
+        });
+}
+
+    // Fetch the BR file name from the server and update the DOM
+  fetch('/displayFileBR')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('brFile').innerText = data.brFile || 'No files found';
+    })
+    .catch(error => {
+      console.error('Error fetching BR data:');
+      document.getElementById('brFile').innerText = 'No files found';
+    });
+
+  // Fetch the RE file name from the server and update the DOM
+  fetch('/displayFileRE')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('respFile').innerText = data.respFile || 'No files found';
+    })
+    .catch(error => {
+      console.error('Error fetching RE data:');
+      document.getElementById('respFile').innerText = 'No files found';
+    });
+
+  // Fetch the LO file name from the server and update the DOM
+  fetch('/displayFileLO')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('logFile').innerText = data.logFile || 'No files found';
+    })
+    .catch(error => {
+      console.error('Error fetching LO data:');
+      document.getElementById('logFile').innerText = 'No files found';
+    });
+    </script>
+  </body>
+</html>
